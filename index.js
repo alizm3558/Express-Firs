@@ -1,12 +1,14 @@
 const express=require('express');
 const productsRouter=require("./routes/products");
 const app=express();
+require("dotenv/config");
 
 const mongoose=require("mongoose");
-const username="<username>"
-const password="<password>"
+//dotenv kullanıldı.
+const username=process.env.USERNAME
+const password=process.env.PASSWORD
 
-mongoose.connect('<connect_info>',
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.net/products?retryWrites=true&w=majority`,
 (e)=>{
     if(e){
         console.log(e);
@@ -18,6 +20,7 @@ mongoose.connect('<connect_info>',
                  
 }
 );
+
 
 
 app.listen(3000,()=>{
