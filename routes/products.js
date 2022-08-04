@@ -1,4 +1,5 @@
 const express = require('express');
+const Product = require('../models/Product');
 
 const router = express.Router();
 
@@ -14,8 +15,14 @@ router.get("/:id", (req, rest) => {
 
 //post
 router.post("/", (req, res) => {
+    const product= new Product( {
+        name:req.body.name,
+        price:req.body.price,
+        description:req.body.description    ,
+    });
+    product.save();
     console.log(req.body);//istek atılırken body ile gönderilen veriler..
-    res.send(req.body);
+    res.json(product);
 });
 
 router.put("/:id", (res, req) => {
