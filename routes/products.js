@@ -14,7 +14,8 @@ router.get("/:id", (req, rest) => {
 
 //post
 router.post("/", (req, res) => {
-    res.send("create product");
+    console.log(req.body);//istek atılırken body ile gönderilen veriler..
+    res.send(req.body);
 });
 
 router.put("/:id", (res, req) => {
