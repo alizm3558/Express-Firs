@@ -4,6 +4,9 @@ const Product = require('../models/Product');
 const router = express.Router();
 
 //route tanımlamalar
+
+
+//get başlar
 router.get("/", (req, res) => {
     Product.find()
     .then((products)=>{
@@ -19,6 +22,9 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, rest) => {
     rest.send(`fetch product ${req.params.id}`);
 });
+// get biter
+
+
 
 //post
 router.post("/", (req, res) => {
