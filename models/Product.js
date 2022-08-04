@@ -10,5 +10,5 @@ const ProductShema=new mongoose.Schema({
     },
 });
 
-//Products:table adı
+//Products:table adıdır
 module.exports=mongoose.model("Product",ProductShema);
