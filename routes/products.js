@@ -5,7 +5,14 @@ const router = express.Router();
 
 //route tanımlamalar
 router.get("/", (req, res) => {
-    res.send("fetch products list");
+    Product.find()
+    .then((products)=>{
+        res.json(products);
+    })
+    .catch((err)=>{
+        res.json(err);
+    });
+    
 });
 
 
