@@ -1,6 +1,7 @@
 const express=require('express');
 
 const productsRouter=require("./routes/products");
+const authRouter=require("./routes/auth");
 const app=express();
 require("dotenv/config");
 const bodyParser=require("body-parser");
@@ -13,8 +14,11 @@ const cors=require("cors");
 app.use(cors());
 app.use(bodyParser.json());
 
-app.listen(3000,()=>{
-    console.log("Server is running on port 3000");
+const port=process.env.PORT || 3000;
+
+
+app.listen(port,()=>{
+    console.log(`Server is running on port ${port}`);
 })
 
 
@@ -35,7 +39,7 @@ mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.n
 
 
 
-
+app.use("/auth",authRouter)
 app.use("/products",productsRouter);
 
 const products=[
