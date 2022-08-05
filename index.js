@@ -6,9 +6,11 @@ require("dotenv/config");
 const bodyParser=require("body-parser");
 const mongoose=require("mongoose");
 //dotenv kullanıldı.
-const username=process.env.USERNAME
-const password=process.env.PASSWORD
+const username=process.env.USERNAME;
+const password=process.env.PASSWORD;
+const cors=require("cors");
 
+app.use(cors());
 app.use(bodyParser.json());
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.net/products?retryWrites=true&w=majority`,
 (e)=>{

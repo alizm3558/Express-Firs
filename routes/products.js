@@ -45,12 +45,32 @@ router.post("/", (req, res) => {
     res.json(product);
 });
 
-router.put("/:id", (res, req) => {
-    res.send(`update product ${req.params.id}`);
-})
 
-router.delete("/:id", (req, rest) => {
-    rest.send(`delete product ${req.params.id}`);
+router.put("/:id", (res, req) => {//update
+    Product.findByIdAndUpdate(req.paramas.id,{
+        name:req.body.name,
+        price:req.body.price,
+        description:req.body.description,
+    })//req.body de olabilir
+    .then((product)=>{
+        res.json(product);
+    })
+    .catch((err)=>{
+        res.json(err);
+    });
+
+});
+
+
+
+router.delete("/:id", (req, res) => {
+    Product.findByIdAndDelete(req.params.id)
+    .then((product)=>{
+        res.json(product);
+    })
+    .catch((err)=>{
+        res.json(err);
+    });
 });
 
 
