@@ -63,7 +63,7 @@ router.put("/:id", (res, req) => {//update
 
 
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res ) => {
     Product.findByIdAndDelete(req.params.id)
     .then((product)=>{
         res.json(product);
