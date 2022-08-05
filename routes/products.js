@@ -7,8 +7,8 @@ const router = express.Router();
 
 
 //get başlar
-router.get("/", (req, res) => {
-    Product.find()
+router.get("/", (req, res) => { //then-catch kısmı promise oluyor..
+    Product.find() //.limit(10)   tüm veriler(dökümanları getirmek istemediğimizde limit koyarız.)
     .then((products)=>{
         res.json(products);
     })
@@ -19,8 +19,15 @@ router.get("/", (req, res) => {
 });
 
 
-router.get("/:id", (req, rest) => {
-    rest.send(`fetch product ${req.params.id}`);
+router.get("/:id", (req, rest) => { //id ye göre ürünleri 
+    Product.findById(req.params.id)
+    .then((product)=>{
+        rest.json(product);
+    })
+    .catch((err)=>{
+        rest.json(err);
+    });
+
 });
 // get biter
 
