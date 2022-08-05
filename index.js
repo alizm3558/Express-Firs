@@ -12,6 +12,12 @@ const cors=require("cors");
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.listen(3000,()=>{
+    console.log("Server is running on port 3000");
+})
+
+
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.net/products?retryWrites=true&w=majority`,
 (e)=>{
     if(e){
@@ -27,9 +33,7 @@ mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.n
 
 
 
-app.listen(3000,()=>{
-    console.log("Server is running on port 3000");
-})
+
 
 
 app.use("/products",productsRouter);
