@@ -3,6 +3,8 @@ const express=require('express');
 const router=express.Router();
 const User=require("../models/Users");
 const Joi=require("@hapi/joi");
+const bcrypt=require("bcryptjs");
+
 
 const registerSchema = Joi.object({ //gelen değerlerin formata uygun olup olmamasının kontrolü için.
     name: Joi.string().required().min(3).max(255),
@@ -20,7 +22,11 @@ router.post("/register",(req,res)=>{
         return;
    }
 
-   const user=new User(req.body);
+   const salt=bcrypt.genSaltSync(10);
+   const hash=bcrypt.hashSync(req.body.password,salt);
+
+//...req.body: body boşaltıyoruz.
+   const user=new User({...req.body,password:hash});
    user
    .save()
    .then((user)=>{
