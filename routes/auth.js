@@ -2,13 +2,25 @@ const express=require('express');
 
 const router=express.Router();
 const User=require("../models/Users");
+const Joi=require("@hapi/joi");
 
-
+const registerSchema = Joi.object({ //gelen değerlerin formata uygun olup olmamasının kontrolü için.
+    name: Joi.string().required().min(3).max(255),
+    email: Joi.string().required().email().min(6).max(255),
+    password: Joi.string().required().min(6).max(255),
+  });
 
 router.post("/register",(req,res)=>{
 
-   const {name,email,password}=req.body;
-   const user=new User({name,email,password});
+   
+   const {error} =registerSchema.validate(req.body);//gelen değerlerin formata uygun olup olmamasının kontrolü için.
+
+   if(error){
+        res.status(400).send(error.details[0].message);
+        return;
+   }
+
+   const user=new User(req.body);
    user
    .save()
    .then((user)=>{
