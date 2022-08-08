@@ -3,6 +3,8 @@ const express=require('express');
 const router=express.Router();
 const User=require("../models/Users");
 
+
+
 router.post("/register",(req,res)=>{
 
    const {name,email,password}=req.body;
@@ -12,7 +14,9 @@ router.post("/register",(req,res)=>{
    .then((user)=>{
        res.send(user);
    })
-   .catch((err)=>{});
+   .catch((err)=>{
+       res.send(err);
+   });
 
 });
 

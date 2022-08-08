@@ -9,9 +9,10 @@ const mongoose=require("mongoose");
 //dotenv kullanıldı.
 const username=process.env.USERNAME;
 const password=process.env.PASSWORD;
-const cors=require("cors");
 
+const cors=require("cors");
 app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -24,6 +25,7 @@ app.listen(port,()=>{
 
 
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.net/products?retryWrites=true&w=majority`,
+
 (e)=>{
     if(e){
         console.log(e);
@@ -33,7 +35,10 @@ mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.axl8t.mongodb.n
     {console.log("Connected database"); 
     } 
                  
-}
+},{useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true, //make this true
+    autoIndex: true,}
 );
 
 
