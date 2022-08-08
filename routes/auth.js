@@ -39,7 +39,26 @@ router.post("/register",(req,res)=>{
 });
 
 router.post("/login",(req,res)=>{
-    res.send("Login");
+    
+    const {email,password}=req.body;
+    User.findOne({email})
+    .then(user=>{
+            if(!user){
+                res.status(400).send("Invalid email or password!");
+            return ;
+            }
+            // şifreleri karşılaştırıyor. formdaki gelenle databasedeki gelen eşit mi?
+            const isValid=bcrypt.compareSync(password,user.password);//password: formdan gelen, user.password: database den gelen
+            
+            if(!isValid){
+                res.status(400).send("Invalid email or password!"); 
+                return;   
+            }
+            res.json(user);
+
+    }).catch(()=>{
+        res.status(400).send("Invalid email or password!");
+    })
 });
 
 
