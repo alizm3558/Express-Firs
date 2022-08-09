@@ -4,13 +4,16 @@ const router=express.Router();
 const User=require("../models/Users");
 const Joi=require("@hapi/joi");
 const bcrypt=require("bcryptjs");
-
+const jwt =require("jsonwebtoken");//hashlenmiş string olarak değer döndürecel..
 
 const registerSchema = Joi.object({ //gelen değerlerin formata uygun olup olmamasının kontrolü için.
     name: Joi.string().required().min(3).max(255),
     email: Joi.string().required().email().min(6).max(255),
     password: Joi.string().required().min(6).max(255),
   });
+
+
+  
 
 router.post("/register",(req,res)=>{
 
@@ -47,6 +50,9 @@ router.post("/login",(req,res)=>{
                 res.status(400).send("Invalid email or password!");
             return ;
             }
+
+           
+
             // şifreleri karşılaştırıyor. formdaki gelenle databasedeki gelen eşit mi?
             const isValid=bcrypt.compareSync(password,user.password);//password: formdan gelen, user.password: database den gelen
             
@@ -54,7 +60,8 @@ router.post("/login",(req,res)=>{
                 res.status(400).send("Invalid email or password!"); 
                 return;   
             }
-            res.json(user);
+            const token=jwt.sign({_id:user._id},process.env.JWT_CODE);// jwt oluşturuluyor.
+            res.header("Authorization",token).json({accessToken:token});
 
     }).catch(()=>{
         res.status(400).send("Invalid email or password!");
